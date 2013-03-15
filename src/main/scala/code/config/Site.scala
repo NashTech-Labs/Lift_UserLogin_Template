@@ -72,6 +72,7 @@ object Site extends Locs {
   val account = MenuLoc(Menu.i("Account") / "settings" / "account" >> SettingsGroup >> RequireLoggedIn)
   val editProfile = MenuLoc(Menu("EditProfile", "Profile") / "settings" / "profile" >> SettingsGroup >> RequireLoggedIn)
   val register = MenuLoc(Menu.i("Register") / "register" >> RequireNotLoggedIn)
+  val beta = MenuLoc(Menu.i("Beta") / "beta" >> Hidden)
   // streams
   val createStream = MenuLoc(
     Menu("CreateStream",
@@ -115,6 +116,7 @@ object Site extends Locs {
       "login" >> RequireNotLoggedIn,
     register.menu,
     loginToken.menu,
+    beta.menu,
     logout.menu,
     profileParamMenu,
     account.menu,

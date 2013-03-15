@@ -1,0 +1,41 @@
+@CHARSET "UTF-8";
+
+body {
+	margin: 0;
+}
+
+#shade,.modal {
+	display: none;
+}
+
+#shade {
+	position: fixed;
+	z-index: 100;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.modal {
+	position: fixed;
+	z-index: 101;
+	top: 33%;
+	border: 2px solid #dadada;
+	width: 400px;
+	left: 35%;
+	padding: 20px;
+	background-color: #ffffff;
+	border-radius: 7px;
+	border-color: #9ecaed;
+	box-shadow: 0 0 10px #9ecaed;
+}
+
+.modal table td {
+	background-color: blue;
+}
+
+#shade {
+	background: silver;
+	opacity: 0.5;
+}

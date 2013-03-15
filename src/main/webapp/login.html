@@ -1,0 +1,54 @@
+<div lift="surround?with=default;at=content">
+	<div lift="BootstrapAlerts?showall=true"></div>
+	<form lift="UserLogin?form=post">
+		<div class="box login">
+			<fieldset class="boxBody">
+				<label>Username</label> <input tabindex="1" id="id_email"
+					name="email" placeholder="Email" type="text" value="" required />
+				<label><a href="#" class="rLink" tabindex="5">Forget
+						your password?</a>Password</label> <input type="password" tabindex="2"
+					id="id_password" placeholder="Password" required> <label><a
+					href="#" class="rLink" id="signUp" tabindex="5">Sign Up</a>Don't
+					have an account ?</label> <input id="yes_password" style="display: none"
+					checked="true" />
+			</fieldset>
+			<footer>
+				<label><input type="radio" name="remember" tabindex="3">Keep
+					me logged in</label> <input type="submit" id="id_submit" class="btnLogin"
+					value="Login" tabindex="4"><br/><br/><br/>
+				<div class="inner">
+					<span lift="Facebook.link" /></span> <span></span><a
+						href="/google/authenticate"><img src="/images/google.png" height="30px"
+							/></a></span> 
+				</div>
+			</footer>
+		</div>
+	</form>
+
+	<script type="text/javascript">
+		/*           */
+		// monitor the password input field and select the yes_password radio.
+		var Signin = {
+			timeoutRtn : 0,
+			monitorPassword : function() {
+				var self = this;
+				if (!$("#yes_password").attr("checked")) {
+					var pwd = $("#id_password").val();
+					if (pwd.length > 0) {
+						$("#yes_password").attr("checked", "checked");
+					} else {
+						self.startMonitor();
+					}
+				}
+			},
+			startMonitor : function() {
+				var self = this;
+				self.timeoutRtn = setTimeout("Signin.monitorPassword()", 1000);
+			}
+		};
+		$(document).ready(function() {
+			Signin.startMonitor();
+		});
+		/*     */
+	</script>
+</div>

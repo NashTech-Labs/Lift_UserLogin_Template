@@ -1,0 +1,27 @@
+
+# mongo
+host=localhost:8080
+mongo.default.host=localhost
+mongo.default.port=27017
+mongo.default.name=knol
+
+
+
+# mail
+#mail.transport.protocol=
+#mail.smtp.host=
+#mail.smtp.port=
+#mail.smtp.auth=
+#mail.smtp.user=
+#mail.smtp.pass=
+#mail.from=
+
+
+#facebook
+facebook.key=<Your Facebook Apps Key>
+facebook.secret=<Your Facebook Apps Secret Key>
+facebook.callbackurl=<Your Facebook Apps Callbackurl>
+
+#google
+google.client.id=<Your Google Client Id>
+google.client.secret=<Your Google Client Secret Id>

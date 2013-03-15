@@ -13,6 +13,7 @@ import net.liftweb.record.field._
 import net.liftweb.util.Helpers._
 import org.bson.types.ObjectId
 import java.text.ParsePosition
+import com.mongodb.casbah.commons.MongoDBObject
 
 class Reminder extends MongoRecord[Reminder] with ObjectIdPk[Reminder] with Loggable {
 
@@ -108,6 +109,12 @@ object Reminder extends Reminder with MongoMetaRecord[Reminder] {
         }
       }
     }
+  }
+
+  def getReminderForToday(userID: String) = {
+    val start_date = new Date(new Date().getYear(), new Date().getMonth(), new Date().getDate())
+    val end_date = new Date(new Date().getYear(), new Date().getMonth(), new Date().getDate() + 1)
+    Reminder.findAll(MongoDBObject("due" -> MongoDBObject("$gte" -> start_date, "$lte" -> end_date), "owner" -> new ObjectId(userID)))
   }
 }
 

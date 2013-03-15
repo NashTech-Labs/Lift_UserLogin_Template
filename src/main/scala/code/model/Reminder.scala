@@ -28,9 +28,9 @@ class Reminder extends MongoRecord[Reminder] with ObjectIdPk[Reminder] with Logg
 object Reminder extends Reminder with MongoMetaRecord[Reminder] {
 
   /**
-   * For creating things to do of a user.
+   * For creating Friend's Birthday Reminder.
    */
-  def createThingsToDo(id: String, description: String, due_date: String): Either[String, Boolean] = {
+  def createReminder(id: String, description: String, due_date: String): Either[String, Boolean] = {
     if (description.equals(""))
       Left("Enter text")
     else if (due_date.equals(""))
@@ -42,12 +42,12 @@ object Reminder extends Reminder with MongoMetaRecord[Reminder] {
         val position = new ParsePosition(0);
         val stringToDate = df.parse(due_date, position);
         if (position.getIndex() == due_date.length()) {
-          val thingsToDo = Reminder.createRecord
-          thingsToDo.created(new Date())
-          thingsToDo.due(stringToDate)
-          thingsToDo.owner(new ObjectId(id))
-          thingsToDo.description(description)
-          thingsToDo.save
+          val reminder = Reminder.createRecord
+          reminder.created(new Date())
+          reminder.due(stringToDate)
+          reminder.owner(new ObjectId(id))
+          reminder.description(description)
+          reminder.save
           Right(true)
         } else
           Left("Enter date in MM/dd/yyyy format")
@@ -70,23 +70,23 @@ object Reminder extends Reminder with MongoMetaRecord[Reminder] {
     }
 
   /**
-   * For deleting things to do of a user.
+   * For deleting reminders of a user.
    */
-  def deleteThingsToDo(thingsToDo: Reminder) = {
-    Reminder.getThingsToDo(thingsToDo).delete_!
+  def deleteReminder(reminder: Reminder) = {
+    Reminder.getReminder(reminder).delete_!
   }
 
   /**
-   * For getting Things To Do reference of a user.
+   * For getting reminders reference of a user.
    */
-  def getThingsToDo(thingsToDo: Reminder) = {
-    Reminder.find(thingsToDo.id.toString).get
+  def getReminder(reminder: Reminder) = {
+    Reminder.find(reminder.id.toString).get
   }
 
   /**
-   * For updating status of particular things to do of a user.
+   * For updating status of particular getReminder of a user.
    */
-  def updateThingsToDo(thingsToDo: Reminder, desc: String, date: String): Either[String, Boolean] = {
+  def updateReminder(reminder: Reminder, desc: String, date: String): Either[String, Boolean] = {
     if (desc.equals(""))
       Left("Can not updated. Enter Text")
     else if (date.equals(""))
@@ -98,7 +98,7 @@ object Reminder extends Reminder with MongoMetaRecord[Reminder] {
         val position = new ParsePosition(0);
         val stringToDate = df.parse(date, position);
         if (position.getIndex() == date.length()) {
-          thingsToDo.description(desc).due(stringToDate).update
+          reminder.description(desc).due(stringToDate).update
           Right(true)
         } else
           Left("Enter date in MM/dd/yyyy format")

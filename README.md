@@ -52,7 +52,7 @@ project , we have also exposed services for REST api .
 1.  User clicks on "Account Setting" to update account detail .
 1.  User clicks on "Password Setting" to update password .
 1.  User clicks on "Logout" to exist .
-1.  User clicks on "Things To Do" to manage Things To Do functionality .
+1.  User clicks on "Birthday Reminder" to manage Birthday Reminders .
 
 
 *************************************************************************************************************

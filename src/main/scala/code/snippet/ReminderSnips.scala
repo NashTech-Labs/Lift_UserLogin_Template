@@ -54,7 +54,7 @@ class Remindersnips extends SortedPaginatorSnippet[Reminder, Date] with Paginato
         description = desc
       }) &
       "#submit" #> SHtml.ajaxSubmit("Create", () => {
-        Reminder.createThingsToDo(User.currentUser.open_!.id.toString, description, dueDate) match {
+        Reminder.createReminder(User.currentUser.open_!.id.toString, description, dueDate) match {
           case Left(notice) => S.error(notice)
           case Right(status) => {
             reloadTable &
@@ -89,7 +89,7 @@ class Remindersnips extends SortedPaginatorSnippet[Reminder, Date] with Paginato
         "#dateID" #> Util.convertUtilDateToString(item.due.is, "dd MMM yyyy") &
         ".btn_2 [id]" #> (item.id.toString + "_btn_1") &
         ".btn_3 [onclick]" #> SHtml.ajaxInvoke(() => {
-          Reminder.deleteThingsToDo(item)
+          Reminder.deleteReminder(item)
           reloadTable &
             recallDatepicker
         }) &
@@ -104,7 +104,7 @@ class Remindersnips extends SortedPaginatorSnippet[Reminder, Date] with Paginato
         ".btn_2 [onclick]" #> showModelPopUp(item) &
         ".model_cancel [onclick]" #> hideModelPopUp(item.id.toString + "_model") &
         ".model_submit " #> SHtml.ajaxSubmit("Update", () => {
-          Reminder.updateThingsToDo(item, model_desc, model_date) match {
+          Reminder.updateReminder(item, model_desc, model_date) match {
             case Left(notice) => {
               S.error(notice)
               hideModelPopUp(item.id.toString + "_model")
@@ -134,15 +134,15 @@ class Remindersnips extends SortedPaginatorSnippet[Reminder, Date] with Paginato
       SetHtml("pagination", refreshPagination.is.applyAgain)
   }
 
-  private def showModelPopUp(thingsToDo: Reminder) = {
-    JsRaw("""var modal= document.getElementById('""" + thingsToDo.id.toString + """_model');
+  private def showModelPopUp(reminder: Reminder) = {
+    JsRaw("""var modal= document.getElementById('""" + reminder.id.toString + """_model');
              var shade= document.getElementById('shade');
              modal.style.display= shade.style.display= 'block';""").cmd &
       recallDatepicker
   }
 
-  private def hideModelPopUp(thingsToDo: String) = {
-    JsRaw("""var modal= document.getElementById('""" + thingsToDo + """');
+  private def hideModelPopUp(reminder: String) = {
+    JsRaw("""var modal= document.getElementById('""" + reminder + """');
              var shade= document.getElementById('shade');
              modal.style.display=shade.style.display= 'none';""").cmd
   }

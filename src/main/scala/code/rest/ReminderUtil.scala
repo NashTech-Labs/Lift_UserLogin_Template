@@ -30,8 +30,8 @@ trait ReminderUtil extends Logger {
   val ITEM_NOT_FOUND = ("status" -> "404") ~ ("message" -> "Item Not Found") ~ Nil
   val WRONG_PASSWORD = ("status" -> "405") ~ ("message" -> "Wrong Password") ~ Nil
   val USER_EXIST = ("status" -> "409") ~ ("message" -> "User already exists !") ~ Nil
-  val THINGSTODO_ALREADY_COMPLETED = ("status" -> "406")  ~ Nil
-  val THINGSTODO_NOT_EXIST = ("status" -> "407") ~ ("message" -> "Things To Do not exists !") ~ Nil
+  val REMINDER_ALREADY_COMPLETED = ("status" -> "406")  ~ Nil
+  val REMINDER_NOT_EXIST = ("status" -> "407") ~ ("message" -> "Reminder not exists !") ~ Nil
   def authControl(jsonObj: JObject, isAuth: Boolean): JObject =
     {
       var json: JObject = Nil

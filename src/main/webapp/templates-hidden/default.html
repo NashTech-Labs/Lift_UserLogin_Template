@@ -1,15 +1,18 @@
 <div class="lift:surround?with=base;at=content">
-	<div class="lift:AlertSnips" id="reminder">
+
+	<span class="lift:UserTopbar"></span>
+	<div id="content">
+		<lift:bind name="content" />
+	</div>
+	<div class="lift:TestCond.loggedin">
+		<div class="lift:AlertSnips" id="reminder">
 			<div id="alert">
 				<ul>
 					<li id="listAlert"></li>
 				</ul>
 			</div>
 		</div>
-		<span class="lift:UserTopbar"></span>
-		<div id="content"><lift:bind name="content" /></div>
-		<div class="lift:TestCond.loggedin">
-		</div>
+	</div>
 	<footer id="main">
 		<span class="lift:embed?what=/templates-hidden/parts/footer"></span>
 	</footer>

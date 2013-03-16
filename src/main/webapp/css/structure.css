@@ -59,7 +59,7 @@ body {
 	margin: -130px 0 0 -166px;
 }
 
-.box.profile,.box.editProfile,.box.content,.box.thingsToDo {
+.box.profile,.box.editProfile,.box.content,.box.reminder {
 	width: 780px;
 	margin: 0 auto;
 	padding: 10px;
@@ -84,7 +84,7 @@ body {
 	margin-left: 80px;
 }
 
-.box.editProfile textarea,.box.thingsToDo textarea {
+.box.editProfile textarea,.box.reminder textarea {
 	margin-left: 6px;
 }
 
@@ -93,13 +93,13 @@ body {
 	width: 190px;
 }
 
-.box.thingsToDo input[type="text"] {
+.box.reminder input[type="text"] {
 	margin: 3px 0 4px 20px;
 }
-.box.thingsToDo input#datepicker {
+.box.reminder input#datepicker {
 	margin: 3px 0 4px 70px;
 }
-.box.thingsToDo .modal input[type="text"] {
+.box.reminder .modal input[type="text"] {
 	margin: 0 0 4px 0px;
 }
 

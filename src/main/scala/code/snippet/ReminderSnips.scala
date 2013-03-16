@@ -22,10 +22,10 @@ import net.liftweb.json.JsonAST.JObject
 
 class Remindersnips extends SortedPaginatorSnippet[Reminder, Date] with PaginatorSnippet[Reminder] {
 
-  var description = ""
-  var dueDate = ""
-  var model_desc = ""
-  var model_date = ""
+  var friend_name = ""
+  var dob = ""
+  var model_friend_name = ""
+  var model_dob = ""
 
   def sortOrder = S.param("asc") match {
     case e: EmptyBox => 0
@@ -43,24 +43,24 @@ class Remindersnips extends SortedPaginatorSnippet[Reminder, Date] with Paginato
     itemsPerPage,
     (curPage * itemsPerPage))
 
-  def headers: List[(String, java.util.Date)] = List(("duedate", Reminder.due.is.noTime))
+  def headers: List[(String, java.util.Date)] = List(("duedate", Reminder.dob.is.noTime))
 
   object refreshtable extends RequestVar(rendertodoField)
   object refreshPagination extends RequestVar(renderPagination)
 
   def render = {
-    "#datepicker" #> SHtml.text(dueDate, dueDate = _) &
-      "#thingsToDo" #> SHtml.text(description, desc => {
-        description = desc
+    "#datepicker" #> SHtml.text(dob, dob = _) &
+      "#bdayReminder" #> SHtml.text(friend_name, name => {
+        friend_name = name
       }) &
-      "#submit" #> SHtml.ajaxSubmit("Create", () => {
-        Reminder.createReminder(User.currentUser.open_!.id.toString, description, dueDate) match {
+      "#submit" #> SHtml.ajaxSubmit("Add", () => {
+        Reminder.createReminder(User.currentUser.open_!.id.toString, friend_name, dob) match {
           case Left(notice) => S.error(notice)
           case Right(status) => {
             reloadTable &
               recallDatepicker &
               JsCmds.SetValById("datepicker", "") &
-              JsCmds.SetValById("thingsToDo", "")
+              JsCmds.SetValById("bdayReminder", "")
           }
         }
       }) &
@@ -85,8 +85,8 @@ class Remindersnips extends SortedPaginatorSnippet[Reminder, Date] with Paginato
   private def rendertodoField = SHtml.memoize {
 
     "#todoList1" #> page.map { item =>
-      "#thingsID" #> item.description.is &
-        "#dateID" #> Util.convertUtilDateToString(item.due.is, "dd MMM yyyy") &
+      "#bdayReminderID" #> item.friend_name.is &
+        "#dateID" #> Util.convertUtilDateToString(item.dob.is, "dd MMM yyyy") &
         ".btn_2 [id]" #> (item.id.toString + "_btn_1") &
         ".btn_3 [onclick]" #> SHtml.ajaxInvoke(() => {
           Reminder.deleteReminder(item)
@@ -94,17 +94,17 @@ class Remindersnips extends SortedPaginatorSnippet[Reminder, Date] with Paginato
             recallDatepicker
         }) &
         "#model [id]" #> (item.id.toString + "_model") &
-        "#model_thingsToDo" #> SHtml.text(item.description.is, desc => {
-          model_desc = desc
+        "#model_bdayReminder" #> SHtml.text(item.friend_name.is, name => {
+          model_friend_name = name
           JsCmds.Noop
         }) &
-        ".datepick" #> SHtml.text(Util.convertUtilDateToString(item.due.is, "MM/dd/yyyy"), desc => {
-          model_date = desc
+        ".datepick" #> SHtml.text(Util.convertUtilDateToString(item.dob.is, "MM/dd/yyyy"), date => {
+          model_dob = date
         }) &
         ".btn_2 [onclick]" #> showModelPopUp(item) &
         ".model_cancel [onclick]" #> hideModelPopUp(item.id.toString + "_model") &
         ".model_submit " #> SHtml.ajaxSubmit("Update", () => {
-          Reminder.updateReminder(item, model_desc, model_date) match {
+          Reminder.updateReminder(item, model_friend_name, model_dob) match {
             case Left(notice) => {
               S.error(notice)
               hideModelPopUp(item.id.toString + "_model")
@@ -117,16 +117,6 @@ class Remindersnips extends SortedPaginatorSnippet[Reminder, Date] with Paginato
           }
         })
     }
-  }
-
-  private def isComplete(status: Boolean) = {
-    if (status) "display:none"
-    else "display:block"
-  }
-
-  private def status(status: Boolean) = {
-    if (status) "Completed"
-    else "Not Completed"
   }
 
   private def reloadTable: JsCmd = {
@@ -147,7 +137,7 @@ class Remindersnips extends SortedPaginatorSnippet[Reminder, Date] with Paginato
              modal.style.display=shade.style.display= 'none';""").cmd
   }
 
-   private def recallDatepicker() = {
+  private def recallDatepicker() = {
     JsRaw("""$(function() {
                     $('.datepick').datepick({alignment:"bottomRight"});
                     });""").cmd

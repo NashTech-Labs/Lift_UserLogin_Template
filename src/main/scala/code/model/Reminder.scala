@@ -20,9 +20,9 @@ class Reminder extends MongoRecord[Reminder] with ObjectIdPk[Reminder] with Logg
   def meta = Reminder
 
   object owner extends ObjectIdRefField(this, User)
-  object description extends StringField(this, 1200)
+  object friend_name extends StringField(this, 1200)
   object created extends DateField(this)
-  object due extends DateField(this)
+  object dob extends DateField(this)
 
 }
 
@@ -31,23 +31,23 @@ object Reminder extends Reminder with MongoMetaRecord[Reminder] {
   /**
    * For creating Friend's Birthday Reminder.
    */
-  def createReminder(id: String, description: String, due_date: String): Either[String, Boolean] = {
-    if (description.equals(""))
+  def createReminder(id: String, friend_name: String, dob: String): Either[String, Boolean] = {
+    if (friend_name.equals(""))
       Left("Enter text")
-    else if (due_date.equals(""))
+    else if (dob.equals(""))
       Left("Select date")
     else {
       try {
         val df = new SimpleDateFormat("MM/dd/yyyy");
         df.setLenient(false);
         val position = new ParsePosition(0);
-        val stringToDate = df.parse(due_date, position);
-        if (position.getIndex() == due_date.length()) {
+        val stringToDate = df.parse(dob, position);
+        if (position.getIndex() == dob.length()) {
           val reminder = Reminder.createRecord
           reminder.created(new Date())
-          reminder.due(stringToDate)
+          reminder.dob(stringToDate)
           reminder.owner(new ObjectId(id))
-          reminder.description(description)
+          reminder.friend_name(friend_name)
           reminder.save
           Right(true)
         } else
@@ -66,7 +66,7 @@ object Reminder extends Reminder with MongoMetaRecord[Reminder] {
     {
       sortOrder match {
         case 0 => Reminder.findAll((("owner" -> userId)), ("created" -> -1), Skip(skip), Limit(limit))
-        case _ => Reminder.findAll((("owner" -> userId)), ("due" -> sortOrder), Skip(skip), Limit(limit))
+        case _ => Reminder.findAll((("owner" -> userId)), ("dob" -> sortOrder), Skip(skip), Limit(limit))
       }
     }
 
@@ -87,8 +87,8 @@ object Reminder extends Reminder with MongoMetaRecord[Reminder] {
   /**
    * For updating status of particular getReminder of a user.
    */
-  def updateReminder(reminder: Reminder, desc: String, date: String): Either[String, Boolean] = {
-    if (desc.equals(""))
+  def updateReminder(reminder: Reminder, friend_name: String, date: String): Either[String, Boolean] = {
+    if (friend_name.equals(""))
       Left("Can not updated. Enter Text")
     else if (date.equals(""))
       Left("Can not updated. Select date")
@@ -99,7 +99,7 @@ object Reminder extends Reminder with MongoMetaRecord[Reminder] {
         val position = new ParsePosition(0);
         val stringToDate = df.parse(date, position);
         if (position.getIndex() == date.length()) {
-          reminder.description(desc).due(stringToDate).update
+          reminder.friend_name(friend_name).dob(stringToDate).update
           Right(true)
         } else
           Left("Enter date in MM/dd/yyyy format")
@@ -114,7 +114,7 @@ object Reminder extends Reminder with MongoMetaRecord[Reminder] {
   def getReminderForToday(userID: String) = {
     val start_date = new Date(new Date().getYear(), new Date().getMonth(), new Date().getDate())
     val end_date = new Date(new Date().getYear(), new Date().getMonth(), new Date().getDate() + 1)
-    Reminder.findAll(MongoDBObject("due" -> MongoDBObject("$gte" -> start_date, "$lte" -> end_date), "owner" -> new ObjectId(userID)))
+    Reminder.findAll(MongoDBObject("dob" -> MongoDBObject("$gte" -> start_date, "$lte" -> end_date), "owner" -> new ObjectId(userID)))
   }
 }
 

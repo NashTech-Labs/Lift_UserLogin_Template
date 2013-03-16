@@ -1,10 +1,10 @@
 
 <div class="lift:surround?with=default;at=content">
-	<div class="box thingsToDo">
+	<div class="box reminder">
 		<div class="lift:Msgs"></div>
 		<div class="lift:Remindersnips">
 			<form class="lift:form:ajax" id="myform">
-				Friend's Name: <input type="text" id="thingsToDo" /> <br> <br>
+				Friend's Name: <input type="text" id="bdayReminder" /> <br> <br>
 				<br />Date: <input type="text" id="datepicker" readonly /><br />
 				<br /> <input type="submit" id="submit" value="Create" />
 			</form>
@@ -21,7 +21,7 @@
 				</thead>
 				<tbody id="todoList">
 					<tr id="todoList1">
-						<td width="30%"><span id="thingsID"></span></td>
+						<td width="30%"><span id="bdayReminderID"></span></td>
 						<td width="30%"><span id="dateID"></span></td>
 						<td width="20%"><input type="submit" class="btn_2"
 							value="Edit" /></td>
@@ -34,7 +34,7 @@
 									<table border="2">
 										<tr>
 											<td>Friend's Name:</td>
-											<td><textarea rows="4" cols="30" id="model_thingsToDo"
+											<td><textarea rows="4" cols="30" id="model_bdayReminder"
 													style="vertical-align: middle"">
 											</textarea></td>
 										</tr>

@@ -20,19 +20,37 @@
 <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script> -->
 <script type="text/javascript">
 	$(function() {
-		var date = new Date();
-		var currentMonth = date.getMonth() + 1;
-		var currentDate = date.getDate() + 1;
-		date = currentMonth + '/' + currentDate + '/' + '1900';
+		$('#reminder div').not(":first-child").hide();
+		if (($('#reminder > div').size()) > 1) {
+			$('#alert ul').append(
+					" and <a href='#' id='birthdayPopupLink'>+"
+							+ ($('#reminder > div').size() - 1)
+							+ "</a>");
+		}
+		$('#birthdayPopupLink')
+				.click(
+						function() {
+							$('.box').css('opacity', '0.5');
+							$('body')
+									.append(
+											"<div id='myModal'><input type='button' onclick='closePopup();' class='close' id='closePopUp' value='&#215;'/>"
+													+ ($('#reminder > div')
+															.not(":first-child")
+															.text()) + "</div>");
+						});
+
 		$('#datepicker').datepick({
-			minDate : date,
 			alignment : "bottomRight"
 		});
 		$('.datepick').datepick({
-			minDate : date,
 			alignment : "bottomRight"
 		});
 	});
+
+	function closePopup() {
+		$('#myModal').remove();
+		$('.box').css('opacity', '1.0');
+	}
 </script>
 
 </head>

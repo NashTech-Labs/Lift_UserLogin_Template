@@ -94,11 +94,13 @@ body {
 }
 
 .box.thingsToDo input[type="text"] {
-	margin: 3px 0 4px 50px;
+	margin: 3px 0 4px 20px;
 }
-
+.box.thingsToDo input#datepicker {
+	margin: 3px 0 4px 70px;
+}
 .box.thingsToDo .modal input[type="text"] {
-	margin: 3px 0 4px 0px;
+	margin: 0 0 4px 0px;
 }
 
 .topContent {
@@ -439,4 +441,23 @@ div#menu li.back .left {
 	top: 0;
 	left: 0;
 	visibility: visible;
+}
+
+#reminder{
+	top:40px;
+	width:400px;
+	position: absolute;
+	z-index:999;
+	font-size:16px;
+	color: #F0F2F5; 
+   font: bold 16px Helvetica, Arial, Sans-Serif;
+   text-shadow: 2px 2px 4px #000;
+}
+
+#reminder:hover {
+   text-shadow: 2px 2px 4px blue;
+}
+#reminder a{
+	text-decoration:none;
+	color:#E26262;	
 }

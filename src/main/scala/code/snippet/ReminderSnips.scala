@@ -149,12 +149,7 @@ class Remindersnips extends SortedPaginatorSnippet[Reminder, Date] with Paginato
 
    private def recallDatepicker() = {
     JsRaw("""$(function() {
-                    var date = new Date();
-                    var currentMonth = date.getMonth()+1;
-                    var currentDate = date.getDate() + 1;
-                    var currentYear = '1900';
-                    date=currentMonth+'/'+currentDate+'/'+currentYear;
-                    $('.datepick').datepick({minDate:date,alignment:"bottomRight"});
+                    $('.datepick').datepick({alignment:"bottomRight"});
                     });""").cmd
   }
 

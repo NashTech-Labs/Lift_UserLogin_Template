@@ -28,7 +28,7 @@ class AlertSnips {
 
   def render = {
     "#alert" #> list.map { item =>
-      "#listAlert" #> ("Today is " +item.description +"'s birthday . :)")
+      "#listAlert" #> ("Today is " +item.description +"'s birthday")
     }
   }
 }

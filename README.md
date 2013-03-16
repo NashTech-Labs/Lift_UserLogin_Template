@@ -61,8 +61,8 @@ project , we have also exposed services for REST api .
 *************************************************************************************************************
 1.  After logging in , user sees "Birthday Reminder" menu on the main page . 
 1.  User clicks on "Birthday Reminder" to add his/her friend's birthdate in reminder list .
-1.  User enters friend's name , select birth date and hits Create button.
-1.  As user will hit Create button, that birthdate will be added in below table.
+1.  User enters friend's name , select birth date and hits Add button.
+1.  As user will hit Add button, that birthdate will be added in below table.
 1.  Table contains list of Birthday Reminders.
 1.  User can delete and edit reminder by clicking on Delete and Edit button respectively from table.
 

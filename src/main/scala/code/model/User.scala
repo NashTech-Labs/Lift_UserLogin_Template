@@ -2,31 +2,31 @@ package code {
   package model {
 
     import java.util.TimeZone
-  import org.bson.types.ObjectId
-  import org.joda.time.DateTime
-  import code.config.Site
-  import net.liftmodules.mongoauth.field._
-  import net.liftmodules.mongoauth.model._
-  import net.liftmodules.mongoauth._
-  import net.liftweb.common._
-  import net.liftweb.http.LiftResponse
-  import net.liftweb.http.RedirectResponse
-  import net.liftweb.http.Req
-  import net.liftweb.http.S
-  import net.liftweb.http.SessionVar
-  import net.liftweb.json.JsonAST.JField
-  import net.liftweb.json.JsonAST.JInt
-  import net.liftweb.json.JsonAST.JObject
-  import net.liftweb.json.JsonAST.JString
-  import net.liftweb.json.JsonAST.JValue
-  import net.liftweb.mongodb.record.field._
-  import net.liftweb.record.field._
-  import net.liftweb.util.FieldContainer
-  import net.liftweb.util.Helpers
-  import net.liftweb._
-  import net.liftweb.http.SessionVar
-  import net.liftweb.util.Props
-  import code.lib.FacebookGraph
+    import org.bson.types.ObjectId
+    import org.joda.time.DateTime
+    import code.config.Site
+    import net.liftmodules.mongoauth.field._
+    import net.liftmodules.mongoauth.model._
+    import net.liftmodules.mongoauth._
+    import net.liftweb.common._
+    import net.liftweb.http.LiftResponse
+    import net.liftweb.http.RedirectResponse
+    import net.liftweb.http.Req
+    import net.liftweb.http.S
+    import net.liftweb.http.SessionVar
+    import net.liftweb.json.JsonAST.JField
+    import net.liftweb.json.JsonAST.JInt
+    import net.liftweb.json.JsonAST.JObject
+    import net.liftweb.json.JsonAST.JString
+    import net.liftweb.json.JsonAST.JValue
+    import net.liftweb.mongodb.record.field._
+    import net.liftweb.record.field._
+    import net.liftweb.util.FieldContainer
+    import net.liftweb.util.Helpers
+    import net.liftweb._
+    import net.liftweb.http.SessionVar
+    import net.liftweb.util.Props
+    import code.lib.FacebookGraph
 
     /**
      * 	A user who uses our application.
@@ -143,6 +143,14 @@ package code {
       def findByUsername(in: String): Box[User] = find(username.name, in)
 
       def findByFacebookId(in: Int): Box[User] = find(facebookId.name, in)
+
+      def findCurrentUser = User.currentUser match {
+        case Full(user) => user
+        case Empty => User
+        case Failure(msg, _, _) =>
+          logger.warn("Error logging user : %s".format(msg))
+          User
+      }
 
       def findByStringId(id: String): Box[User] =
         if (ObjectId.isValid(id)) find(new ObjectId(id)) else Empty

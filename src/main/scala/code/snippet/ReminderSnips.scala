@@ -32,13 +32,14 @@ class Remindersnips extends SortedPaginatorSnippet[Reminder, Date] with Paginato
     case b: Box[String] => if (b.get.equalsIgnoreCase("true")) 1 else -1
   }
 
+  val user = User.findCurrentUser
+
   override def count = Reminder.findAllNotes(
-    User.currentUser.open_!.userIdAsString).size
+    user.userIdAsString).size
 
   override def itemsPerPage = 5
 
-  override def page = Reminder.findAllNotes(
-    User.currentUser.open_!.userIdAsString,
+  override def page = Reminder.findAllNotes(user.userIdAsString,
     sortOrder,
     itemsPerPage,
     (curPage * itemsPerPage))
@@ -54,7 +55,7 @@ class Remindersnips extends SortedPaginatorSnippet[Reminder, Date] with Paginato
         friend_name = name
       }) &
       "#submit" #> SHtml.ajaxSubmit("Add", () => {
-        Reminder.createReminder(User.currentUser.open_!.id.toString, friend_name, dob) match {
+        Reminder.createReminder(user.userIdAsString, friend_name, dob) match {
           case Left(notice) => S.error(notice)
           case Right(status) => {
             reloadTable &

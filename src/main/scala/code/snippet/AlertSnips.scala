@@ -24,11 +24,12 @@ import code.model.User
 import net.liftweb.json.JsonAST.JObject
 
 class AlertSnips {
-  val list = Reminder.getReminderForToday(User.currentUser.open_!.id.toString)
+  val userId = User.findCurrentUser.userIdAsString
+  val list = Reminder.getReminderForToday(userId)
 
   def render = {
     "#alert" #> list.map { item =>
-      "#listAlert" #> ("Today is " +item.friend_name +"'s birthday")
+      "#listAlert" #> ("Today is " + item.friend_name + "'s birthday")
     }
   }
 }

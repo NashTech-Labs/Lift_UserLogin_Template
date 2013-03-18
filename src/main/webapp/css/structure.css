@@ -96,9 +96,7 @@ body {
 .box.reminder input[type="text"] {
 	margin: 3px 0 4px 20px;
 }
-.box.reminder input#datepicker {
-	margin: 3px 0 4px 70px;
-}
+
 .box.reminder .modal input[type="text"] {
 	margin: 0 0 4px 0px;
 }

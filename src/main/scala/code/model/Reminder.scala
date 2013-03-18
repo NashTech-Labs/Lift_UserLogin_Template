@@ -33,9 +33,9 @@ object Reminder extends Reminder with MongoMetaRecord[Reminder] {
    */
   def createReminder(id: String, friend_name: String, dob: String): Either[String, Boolean] = {
     if (friend_name.equals(""))
-      Left("Enter text")
+      Left("Enter Friend's Name")
     else if (dob.equals(""))
-      Left("Select date")
+      Left("Select Date")
     else {
       try {
         val df = new SimpleDateFormat("MM/dd/yyyy");
@@ -89,9 +89,9 @@ object Reminder extends Reminder with MongoMetaRecord[Reminder] {
    */
   def updateReminder(reminder: Reminder, friend_name: String, date: String): Either[String, Boolean] = {
     if (friend_name.equals(""))
-      Left("Can not updated. Enter Text")
+      Left("Can not updated. Enter Friend's Name")
     else if (date.equals(""))
-      Left("Can not updated. Select date")
+      Left("Can not updated. Select Date")
     else {
       try {
         val df = new SimpleDateFormat("MM/dd/yyyy");

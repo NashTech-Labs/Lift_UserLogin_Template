@@ -114,7 +114,7 @@ object Reminder extends Reminder with MongoMetaRecord[Reminder] {
   def getReminderForToday(userID: String) = {
     val start_date = new Date(new Date().getYear(), new Date().getMonth(), new Date().getDate())
     val end_date = new Date(new Date().getYear(), new Date().getMonth(), new Date().getDate() + 1)
-    Reminder.findAll(MongoDBObject("dob" -> MongoDBObject("$gte" -> start_date, "$lte" -> end_date), "owner" -> new ObjectId(userID)))
+    Reminder.findAll(MongoDBObject("dob" -> MongoDBObject("$gte" -> start_date, "$lt" -> end_date), "owner" -> new ObjectId(userID)))
   }
 }
 

@@ -48,7 +48,6 @@ class Remindersnips extends SortedPaginatorSnippet[Reminder, Date] with Paginato
 
   object refreshtable extends RequestVar(rendertodoField)
   object refreshPagination extends RequestVar(renderPagination)
-
   def render = {
     "#datepicker" #> SHtml.text(dob, dob = _) &
       "#bdayReminder" #> SHtml.text(friend_name, name => {
@@ -121,8 +120,14 @@ class Remindersnips extends SortedPaginatorSnippet[Reminder, Date] with Paginato
   }
 
   private def reloadTable: JsCmd = {
+    val userId = User.findCurrentUser.userIdAsString
+    val list = Reminder.getReminderForToday(userId)
     SetHtml("myTable", refreshtable.is.applyAgain) &
-      SetHtml("pagination", refreshPagination.is.applyAgain)
+      SetHtml("pagination", refreshPagination.is.applyAgain) &
+      SetHtml("alerts",
+        list.map { item =>
+          <li> Today is { item.friend_name }'s birthday</li>
+        })
   }
 
   private def showModelPopUp(reminder: Reminder) = {

@@ -21,6 +21,7 @@ import code.rest.LoginRest
 import code.rest.ReminderRest
 import code.api.FacebookApiStateful
 import code.service.GoogleDispatcher
+import net.liftmodules.widgets.autocomplete.AutoComplete
 
 /**
  * A class that's instantiated early and run.
@@ -37,8 +38,6 @@ class Boot {
     LiftRules.dispatch.append(ReminderRest)
     LiftRules.dispatch.append(GoogleDispatcher.matcher)
 
-   
-
     // init mongodb
     MongoConfig.init()
 
@@ -49,6 +48,9 @@ class Boot {
     MongoAuth.siteName.default.set("Knol")
     MongoAuth.systemEmail.default.set("test@test.com")
     MongoAuth.systemUsername.default.set("knol")
+
+    // init Autocomplete functionality
+    AutoComplete.init
 
     /*
      * Init the jQuery module, 

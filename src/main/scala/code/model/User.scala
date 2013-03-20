@@ -414,6 +414,8 @@ package code {
         }
       }
     }
+    
+  
 
     case class LoginCredentials(val email: String, val isRememberMe: Boolean = false)
   }

@@ -19,6 +19,10 @@ import net.liftweb.http.PaginatorSnippet
 import net.liftweb.mongodb.Limit
 import code.model.User
 import net.liftweb.json.JsonAST.JObject
+import net.liftweb.mapper.Like
+import com.mongodb.casbah.commons.MongoDBObject
+import java.util.regex.Pattern
+import net.liftmodules.widgets.autocomplete.AutoComplete
 
 class Remindersnips extends SortedPaginatorSnippet[Reminder, Date] with PaginatorSnippet[Reminder] {
 
@@ -26,7 +30,7 @@ class Remindersnips extends SortedPaginatorSnippet[Reminder, Date] with Paginato
   var dob = ""
   var model_friend_name = ""
   var model_dob = ""
-
+  var friend_name_auto = ""
   def sortOrder = S.param("asc") match {
     case e: EmptyBox => 0
     case b: Box[String] => if (b.get.equalsIgnoreCase("true")) 1 else -1
@@ -44,28 +48,41 @@ class Remindersnips extends SortedPaginatorSnippet[Reminder, Date] with Paginato
     itemsPerPage,
     (curPage * itemsPerPage))
 
-  def headers: List[(String, java.util.Date)] = List(("duedate", Reminder.dob.is.noTime))
+  def headers: List[(String, java.util.Date)] = List(("dob", Reminder.dob.is.noTime))
 
   object refreshtable extends RequestVar(rendertodoField)
   object refreshPagination extends RequestVar(renderPagination)
   def render = {
-    "#datepicker" #> SHtml.text(dob, dob = _) &
-      "#bdayReminder" #> SHtml.text(friend_name, name => {
-        friend_name = name
-      }) &
+    "#bdayReminder" #> AutoComplete("",
+      getAllName _,
+      value => takeAction(value),
+      List("minChars" -> "2")) &
+      "#datepicker" #> SHtml.text(dob, dob = _) &
       "#submit" #> SHtml.ajaxSubmit("Add", () => {
-        Reminder.createReminder(user.userIdAsString, friend_name, dob) match {
+        println("friend_name = " + friend_name + " friend_name_auto = " + friend_name_auto)
+        var name = ""
+        if (friend_name_auto.equals(""))
+          name = friend_name
+        else
+          name = friend_name_auto
+        Reminder.createReminder(user.userIdAsString, name, dob) match {
           case Left(notice) => S.error(notice)
           case Right(status) => {
+         /*   friend_name = ""
+            friend_name_auto = ""*/
             reloadTable &
               recallDatepicker &
               JsCmds.SetValById("datepicker", "") &
-              JsCmds.SetValById("bdayReminder", "")
+              JsRaw(""" $("span#bdayReminder input").val("")""").cmd
           }
         }
       }) &
       "#myTable" #> refreshtable.is &
       "#pagination" #> refreshPagination.is
+  }
+
+  private def takeAction(str: String) {
+    friend_name_auto = str
   }
 
   private def renderPagination = SHtml.memoize {
@@ -116,6 +133,15 @@ class Remindersnips extends SortedPaginatorSnippet[Reminder, Date] with Paginato
             }
           }
         })
+    }
+  }
+
+  def getAllName(current: String, limit: Int): Seq[String] = {
+    friend_name = current
+    println("current " + current)
+    val pattern = Pattern.compile("^" + current, Pattern.CASE_INSENSITIVE)
+    User.findAll(MongoDBObject("name" -> pattern)).map {
+      _.name.is
     }
   }
 

@@ -59,17 +59,9 @@ class Remindersnips extends SortedPaginatorSnippet[Reminder, Date] with Paginato
       List("minChars" -> "2")) &
       "#datepicker" #> SHtml.text(dob, dob = _) &
       "#submit" #> SHtml.ajaxSubmit("Add", () => {
-        println("friend_name = " + friend_name + " friend_name_auto = " + friend_name_auto)
-        var name = ""
-        if (friend_name_auto.equals(""))
-          name = friend_name
-        else
-          name = friend_name_auto
-        Reminder.createReminder(user.userIdAsString, name, dob) match {
+        Reminder.createReminder(user.userIdAsString, friend_name, dob) match {
           case Left(notice) => S.error(notice)
           case Right(status) => {
-         /*   friend_name = ""
-            friend_name_auto = ""*/
             reloadTable &
               recallDatepicker &
               JsCmds.SetValById("datepicker", "") &
@@ -82,7 +74,7 @@ class Remindersnips extends SortedPaginatorSnippet[Reminder, Date] with Paginato
   }
 
   private def takeAction(str: String) {
-    friend_name_auto = str
+    friend_name= str
   }
 
   private def renderPagination = SHtml.memoize {
@@ -137,8 +129,6 @@ class Remindersnips extends SortedPaginatorSnippet[Reminder, Date] with Paginato
   }
 
   def getAllName(current: String, limit: Int): Seq[String] = {
-    friend_name = current
-    println("current " + current)
     val pattern = Pattern.compile("^" + current, Pattern.CASE_INSENSITIVE)
     User.findAll(MongoDBObject("name" -> pattern)).map {
       _.name.is

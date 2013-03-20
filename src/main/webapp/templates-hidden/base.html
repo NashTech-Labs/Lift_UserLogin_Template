@@ -46,6 +46,11 @@
 		});
 	});
 
+	$(document).ready(function() {
+		$('span#bdayReminder input').bind('blur', function() {
+			$(this).next().val($(this).val());
+		});
+	});
 	function closePopup() {
 		$('#myModal').remove();
 		$('.box').css('opacity', '1.0');

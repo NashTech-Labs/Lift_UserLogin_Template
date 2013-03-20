@@ -30,7 +30,6 @@ class Remindersnips extends SortedPaginatorSnippet[Reminder, Date] with Paginato
   var dob = ""
   var model_friend_name = ""
   var model_dob = ""
-  var friend_name_auto = ""
   def sortOrder = S.param("asc") match {
     case e: EmptyBox => 0
     case b: Box[String] => if (b.get.equalsIgnoreCase("true")) 1 else -1
@@ -74,7 +73,7 @@ class Remindersnips extends SortedPaginatorSnippet[Reminder, Date] with Paginato
   }
 
   private def takeAction(str: String) {
-    friend_name= str
+    friend_name = str
   }
 
   private def renderPagination = SHtml.memoize {

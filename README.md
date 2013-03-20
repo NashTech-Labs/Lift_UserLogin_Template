@@ -46,6 +46,7 @@ project , we have also exposed services for REST api .
 1.  After creating new account , user lands on login page again . 
 1.  User enters his/her email address and password and hits login button .
 1.  After logging in , user sees six menus on the main page .
+1.  User will see Bday alert on home page , if his/her friend have Bday on that particular day.
 1.  User sees his/her Gravatar image on the right side . 
 1.  User clicks on "Profile" to see his/her profile detail .
 1.  User clicks on "Edit your profile" on "Profile" page to edit his/her profile.
@@ -62,6 +63,7 @@ project , we have also exposed services for REST api .
 1.  After logging in , user sees "Birthday Reminder" menu on the main page . 
 1.  User clicks on "Birthday Reminder" to add his/her friend's birthdate in reminder list .
 1.  User enters friend's name , select birth date and hits Add button.
+1.  Friend's name text box has Auto complete functionality. User can select from drop down list of auto complete as well as he can enter his   own value.
 1.  As user will hit Add button, that birthdate will be added in below table.
 1.  Table contains list of Birthday Reminders.
 1.  User can delete and edit reminder by clicking on Delete and Edit button respectively from table.

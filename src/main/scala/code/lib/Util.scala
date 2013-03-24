@@ -11,7 +11,7 @@ object Util {
     val formatedDate = new SimpleDateFormat(format).format(date)
     formatedDate
     }catch{
-      case ex =>  ""
+      case ex : Throwable =>  ""
     }
   }
 

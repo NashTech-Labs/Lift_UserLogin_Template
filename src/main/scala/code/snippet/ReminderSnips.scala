@@ -147,21 +147,21 @@ class Remindersnips extends SortedPaginatorSnippet[Reminder, Date] with Paginato
 
   private def showModelPopUp(reminder: Reminder) = {
     JsRaw("""var modal= document.getElementById('""" + reminder.id.toString + """_model');
-             var shade= document.getElementById('shade');
-             modal.style.display= shade.style.display= 'block';""").cmd &
+var shade= document.getElementById('shade');
+modal.style.display= shade.style.display= 'block';""").cmd &
       recallDatepicker
   }
 
   private def hideModelPopUp(reminder: String) = {
     JsRaw("""var modal= document.getElementById('""" + reminder + """');
-             var shade= document.getElementById('shade');
-             modal.style.display=shade.style.display= 'none';""").cmd
+var shade= document.getElementById('shade');
+modal.style.display=shade.style.display= 'none';""").cmd
   }
 
   private def recallDatepicker() = {
     JsRaw("""$(function() {
-                    $('.datepick').datepick({alignment:"bottomRight"});
-                    });""").cmd
+$('.datepick').datepick({alignment:"bottomRight"});
+});""").cmd
   }
 
 }

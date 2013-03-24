@@ -95,7 +95,7 @@ object ProfileScreen extends BaseCurrentUserScreen {
               <a href="http://gravatar.com" target="_blank">Gravatar.com</a>
             </h4>
             <p>
-              We're using{ user.email.is }
+              We're using { user.email.is }
               . It may take time for changes made on gravatar.com to appear on our site.
             </p>
           </div>
@@ -109,7 +109,7 @@ object ProfileScreen extends BaseCurrentUserScreen {
       case _ => NodeSeq.Empty
     }
 
-  val gravatar = displayOnly("Picture", gravatarHtml)
+  //val gravatar = displayOnly("Picture", gravatarHtml)
 
   addFields(() => userVar.is.profileScreenFields)
 

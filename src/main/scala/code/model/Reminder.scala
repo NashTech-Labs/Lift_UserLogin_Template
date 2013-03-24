@@ -53,7 +53,7 @@ object Reminder extends Reminder with MongoMetaRecord[Reminder] {
         } else
           Left("Enter date in MM/dd/yyyy format")
       } catch {
-        case ex => {
+        case ex: Throwable => {
           Left("Enter date in MM/dd/yyyy format")
         }
       }
@@ -104,7 +104,7 @@ object Reminder extends Reminder with MongoMetaRecord[Reminder] {
         } else
           Left("Enter date in MM/dd/yyyy format")
       } catch {
-        case ex => {
+        case ex : Throwable => {
           Left("Enter date in MM/dd/yyyy format")
         }
       }

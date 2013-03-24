@@ -26,12 +26,25 @@ object MongoConfig extends Loggable {
               Props.getInt("mongo.default.port", 27017),
               Props.get("mongo.default.name", "knol")))
 
-    MongoDB.defineDb(
-      DefaultMongoIdentifier,
-      new Mongo(defaultDbAddress),
-      defaultDbAddress.getDBName)
+    /*
+         * If mongo.default.user, and pwd are defined, configure Mongo using authentication.
+         */
+    (Props.get("mongo.default.user"), Props.get("mongo.default.pass")) match {
+      case (Full(user), Full(pass)) =>
+        MongoDB.defineDbAuth(
+          DefaultMongoIdentifier,
+          new Mongo(defaultDbAddress),
+          defaultDbAddress.getDBName,
+          user,
+          pass)
+        logger.info("MongoDB inited using authentication: %s".format(defaultDbAddress.toString))
+      case _ =>
+        MongoDB.defineDb(
+          DefaultMongoIdentifier,
+          new Mongo(defaultDbAddress),
+          defaultDbAddress.getDBName)
+        logger.info("MongoDB inited: %s".format(defaultDbAddress.toString))
+    }
 
-    logger.info("MongoDB inited: %s".
-      format(defaultDbAddress.toString))
   }
 }

@@ -4,7 +4,7 @@ import net.liftweb.json.JsonAST._
 import net.liftweb.json.JsonDSL._
 import net.liftweb.http.S
 import java.util.Locale
-import dispatch.Http
+import dispatch.classic.Http
 import net.liftweb.common.Full
 import net.liftweb.common.Logger
 import code.service.LoginToken

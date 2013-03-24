@@ -8,7 +8,7 @@ import common._
 import json._
 import http.{ Factory, S, SessionVar }
 import util.{ Helpers, Props }
-import dispatch._
+import dispatch.classic._
 import code.config._
 
 import net.liftweb.util.Props

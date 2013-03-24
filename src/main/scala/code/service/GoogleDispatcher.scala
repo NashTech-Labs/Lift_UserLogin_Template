@@ -93,11 +93,11 @@ object GoogleDispatcher extends Loggable {
   private def createOrLoginUser(userInfo: Userinfo) = {
     User.findByEmail(userInfo.getEmail) match {
       case Full(user) => // needs merging
-        User.logUserIn(user, true, true)
+        User.logUserIn(user)
 
       case _ => { // new user; send to register page with form pre-filled
         val user = User.saveUser(userInfo.getEmail, "", userInfo.getName(), userInfo.getEmail)
-        User.logUserIn(user, true, true)
+        User.logUserIn(user)
       }
     }
   }

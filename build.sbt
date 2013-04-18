@@ -18,10 +18,10 @@ resolvers += "Google Api client" at "http://mavenrepo.google-api-java-client.goo
     val liftVersion = "2.5-RC2"
     val dispatchVersion = "0.8.9"
     libraryDependencies ++= Seq(
-    		"com.typesafe.akka" % "akka-actor" % "2.1-M1",
-			"com.typesafe.akka" % "akka-remote" % "2.1-M1",
-			"com.typesafe.akka" % "akka-testkit" % "2.1-M1",
-			"com.typesafe.akka" % "akka-kernel" % "2.1-M1",
+    		"com.typesafe.akka" % "akka-actor" % "2.1.2",
+			"com.typesafe.akka" % "akka-remote" % "2.1.2",
+			"com.typesafe.akka" % "akka-testkit" % "2.1.2",
+			"com.typesafe.akka" % "akka-kernel" % "2.1.2",
             "net.liftweb" % "lift-mongodb-record_2.10" % liftVersion,
             "net.liftweb" % "lift-mapper_2.10" % liftVersion,
             "net.liftmodules" % "widgets_2.10" % (liftVersion+"-1.2") % "compile->default",
@@ -41,7 +41,8 @@ resolvers += "Google Api client" at "http://mavenrepo.google-api-java-client.goo
             "junit" % "junit" % "4.7" % "test",
             "com.google.apis" % "google-api-services-oauth2" % "v2-rev9-1.7.2-beta",
             "net.liftmodules" % "lift-jquery-module_2.10" % (liftVersion + "-2.2"),
-            "org.specs2" % "specs2_2.10" % "1.14" % "test"
+            "org.specs2" % "specs2_2.10" % "1.14" % "test",
+            "org.scala-lang" % "scala-reflect" % "2.10.0-M6" % "compile"
      )
 }
 

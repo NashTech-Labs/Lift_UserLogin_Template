@@ -6,21 +6,14 @@ version := "0.1"
 
 scalaVersion := "2.10.0"
 
-
-
-
-
-
 resolvers += "Scala-tools" at "https://oss.sonatype.org/content/groups/scala-tools"
 
 resolvers += "Sonatype Snapshot" at "http://oss.sonatype.org/content/repositories/snapshots"
 
 resolvers += "Google Api client" at "http://mavenrepo.google-api-java-client.googlecode.com/hg/"
 
-
-
 {
-     val liftVersion = "2.5-RC2"
+    val liftVersion = "2.5-RC2"
     val dispatchVersion = "0.8.9"
     libraryDependencies ++= Seq(
             "net.liftweb" % "lift-mongodb-record_2.10" % liftVersion,
@@ -50,5 +43,3 @@ resolvers += "Google Api client" at "http://mavenrepo.google-api-java-client.goo
 scalacOptions += "-deprecation"
 
 seq(webSettings :_*)
-
-

@@ -6,6 +6,8 @@ version := "0.1"
 
 scalaVersion := "2.10.0"
 
+resolvers += "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/"
+
 resolvers += "Scala-tools" at "https://oss.sonatype.org/content/groups/scala-tools"
 
 resolvers += "Sonatype Snapshot" at "http://oss.sonatype.org/content/repositories/snapshots"
@@ -16,6 +18,10 @@ resolvers += "Google Api client" at "http://mavenrepo.google-api-java-client.goo
     val liftVersion = "2.5-RC2"
     val dispatchVersion = "0.8.9"
     libraryDependencies ++= Seq(
+    		"com.typesafe.akka" % "akka-actor" % "2.1-M1",
+			"com.typesafe.akka" % "akka-remote" % "2.1-M1",
+			"com.typesafe.akka" % "akka-testkit" % "2.1-M1",
+			"com.typesafe.akka" % "akka-kernel" % "2.1-M1",
             "net.liftweb" % "lift-mongodb-record_2.10" % liftVersion,
             "net.liftweb" % "lift-mapper_2.10" % liftVersion,
             "net.liftmodules" % "widgets_2.10" % (liftVersion+"-1.2") % "compile->default",

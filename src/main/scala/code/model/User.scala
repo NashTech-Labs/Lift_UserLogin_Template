@@ -141,6 +141,8 @@ package code {
       def findByEmail(in: String): Box[User] = find(email.name, in)
 
       def findByUsername(in: String): Box[User] = find(username.name, in)
+      
+      def findByName(in: String): Box[User] = find(name.name, in)
 
       def findByFacebookId(in: Int): Box[User] = find(facebookId.name, in)
 

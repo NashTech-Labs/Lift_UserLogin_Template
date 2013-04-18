@@ -10,8 +10,6 @@ import net.liftweb.http.js._
 import net.liftweb.util._
 import Helpers._
 import net.liftweb.http._
-import scala.actors._
-import scala.actors.Actor._
 import net.liftweb.http._
 import net.liftweb._
 import mapper._
@@ -37,10 +35,11 @@ import JqJE._
 import java.util._
 import code.comet._
 import code.model.User
+import akka.actor._
 
 class CometAlert extends CometActor {
   override def defaultPrefix = Full("alert")
-  private lazy val alertManager: AlertActor = CometAlertController.getManager
+  private lazy val alertManager: ActorRef = CometAlertController.getManager
 
   def render = {
     "#alertSubmit [onClick]" #> SHtml.ajaxCall(JE.JsRaw("""$("#txtEmail").val() """), email => {

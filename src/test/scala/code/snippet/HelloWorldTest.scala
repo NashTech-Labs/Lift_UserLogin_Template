@@ -10,8 +10,10 @@ import lib._
 import org.specs2.mutable.Specification
 import org.specs2.specification.AroundExample
 import org.specs2.execute.Result
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
-
+@RunWith(classOf[JUnitRunner])
 object HelloWorldTestSpecs extends Specification with AroundExample{/*
   val session = new LiftSession("", randomString(20), Empty)
   val stableTime = now

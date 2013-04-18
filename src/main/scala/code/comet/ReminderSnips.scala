@@ -26,7 +26,7 @@ import net.liftmodules.widgets.autocomplete.AutoComplete
 
 class Remindersnippet extends CometActor with PaginatorSnippet[Reminder] with SortedPaginatorSnippet[Reminder, Date] {
   override def defaultPrefix = Full("alert")
-  private lazy val alertManager: AlertActor = CometAlertController.getManager
+  private lazy val alertManager = CometAlertController.getManager
 
   var friend_name = ""
   var dob = ""

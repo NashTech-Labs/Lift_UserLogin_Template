@@ -1,11 +1,14 @@
 package code.comet
 
+import akka.actor._
+
 object CometAlertController {
 
-  val AlertActor = new AlertActor
-  AlertActor.start
+  val system = ActorSystem("manager")
 
-  def getManager(): AlertActor = {
+  val AlertActor = system.actorOf(Props[AkkaAlertActor])
+
+  def getManager(): ActorRef = {
     AlertActor
   }
 

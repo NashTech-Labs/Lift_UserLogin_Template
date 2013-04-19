@@ -53,9 +53,9 @@ class Chat extends CometActor {
 
   private def getName(name: String) = {
     if (user.username.is.equals(name)) {
-      "me"
+      "me :-"
     } else {
-      name
+      name+" :-"
     }
   }
   // appropriate dynamically generated code to the

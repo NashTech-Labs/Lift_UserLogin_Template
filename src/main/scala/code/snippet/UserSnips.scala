@@ -197,9 +197,6 @@ object UserTopbar {
               <li><label><lift:Menu.item name="Chat" donthide="true" linktoself="true">
                            <span>Chat</span>
                          </lift:Menu.item></label></li>
-              <li><label><lift:Menu.item name="About" donthide="true" linktoself="true">
-                           <span>Help</span>
-                         </lift:Menu.item></label></li>
               <li><label><lift:Menu.item name="Logout" donthide="true" linktoself="true">
                            <span>Log Out</span>
                          </lift:Menu.item></label></li>

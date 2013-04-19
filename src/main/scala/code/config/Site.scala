@@ -69,6 +69,7 @@ object Site extends Locs {
   val database = MenuLoc(Menu.i("Database") / "admin" / "database" >> AdminGroup >> RequireLoggedIn >> HasRole("superuser"))
   val password = MenuLoc(Menu.i("Password") / "settings" / "password" >> RequireLoggedIn)
   val reminder = MenuLoc(Menu.i("Reminder") / "reminder" >> RequireLoggedIn)
+  val chat = MenuLoc(Menu.i("Chat") / "chat" >> RequireLoggedIn)
   val account = MenuLoc(Menu.i("Account") / "settings" / "account" >> SettingsGroup >> RequireLoggedIn)
   val editProfile = MenuLoc(Menu("EditProfile", "Profile") / "settings" / "profile" >> SettingsGroup >> RequireLoggedIn)
   val register = MenuLoc(Menu.i("Register") / "register" >> RequireNotLoggedIn)
@@ -125,6 +126,7 @@ object Site extends Locs {
     users.menu,
     categories.menu,
     reminder.menu,
+    chat.menu,
     database.menu,
     Menu.i("About") /
       "about" >> TopBarGroup,

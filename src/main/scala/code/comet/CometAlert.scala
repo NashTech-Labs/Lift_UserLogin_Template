@@ -36,31 +36,35 @@ import java.util._
 import code.comet._
 import code.model.User
 import akka.actor._
+import code.lib.BridgeController
 
 class CometAlert extends CometActor {
   override def defaultPrefix = Full("alert")
   private lazy val alertManager: ActorRef = CometAlertController.getManager
+  private lazy val bridge: ActorRef = BridgeController.getBridgeActor
 
   def render = {
     "#alertSubmit [onClick]" #> SHtml.ajaxCall(JE.JsRaw("""$("#txtEmail").val() """), email => {
-      var msg="You have been added by "+User.currentUser.open_!.name
-      alertManager ! Control(this, email,msg)
+      var msg = "You have been added by " + User.currentUser.open_!.name
+      alertManager ! Control(bridge, email, msg)
     })
   }
 
   override def localSetup {
-    alertManager ! Subscribe(this, User.currentUser.open_!)
+    bridge ! this
+    alertManager ! Subscribe(bridge, User.currentUser.open_!.id.is)
     super.localSetup
   }
 
   override def localShutdown {
-    alertManager ! Unsubscribe(this)
+    alertManager ! Unsubscribe(bridge)
+    bridge ! akka.actor.PoisonPill
     super.localShutdown
   }
 
   override def lowPriority = {
     case Inside(msg) =>
       partialUpdate(SetHtml("msg", Text(msg)))
-     // S.notice(msg)
+    // S.notice(msg)
   }
 }

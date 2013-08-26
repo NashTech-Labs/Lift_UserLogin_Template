@@ -7,8 +7,10 @@ import net.liftweb.common._
 import net.liftweb.util.Helpers._
 import net.liftweb.http.js.JsCmds
 import net.liftweb.http.ActorWatcher
+import akka.actor.ActorRef
+import org.bson.types.ObjectId
 
-class AlertActor extends Actor {
+/*class AlertActor extends Actor {
 
   var playerList: List[(U)] = Nil
 
@@ -36,12 +38,12 @@ class AlertActor extends Actor {
     }
   }
 }
-
-class U(actorVar: LiftActor, use: User) {
-  var actor = actorVar
-  var user = use
+*/
+class U(actorVar: ActorRef, id: ObjectId) {
+  val actor = actorVar
+  val userId = id
 }
-case class Subscribe(act: LiftActor, user: User)
-case class Unsubscribe(act: LiftActor)
+case class Subscribe(act: ActorRef, userId: ObjectId)
+case class Unsubscribe(act: ActorRef)
 case class Inside(msg: String)
-case class Control(who: LiftActor, eml: String, msg: String)
+case class Control(who: ActorRef, eml: String, msg: String)

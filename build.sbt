@@ -14,6 +14,7 @@ resolvers += "Sonatype Snapshot" at "http://oss.sonatype.org/content/repositorie
 
 resolvers += "Google Api client" at "http://mavenrepo.google-api-java-client.googlecode.com/hg/"
 
+
 {
     val liftVersion = "2.5-RC2"
     val dispatchVersion = "0.8.9"
@@ -42,10 +43,14 @@ resolvers += "Google Api client" at "http://mavenrepo.google-api-java-client.goo
             "junit" % "junit" % "4.7" % "test",
             "com.google.apis" % "google-api-services-oauth2" % "v2-rev9-1.7.2-beta",
             "net.liftmodules" % "lift-jquery-module_2.10" % (liftVersion + "-2.2"),
-             "net.liftmodules" % "textile_2.5_2.10" % "1.3" % "compile->default",
-            "org.specs2" % "specs2_2.10" % "1.14" % "test"     )
+            "net.liftmodules" % "textile_2.5_2.10" % "1.3" % "compile->default",
+            "org.specs2" % "specs2_2.10" % "1.14" % "test",
+            "com.romix.akka" % "akka-kryo-serialization" % "0.2-SNAPSHOT",
+        	"com.esotericsoftware.kryo" % "kryo" % "2.20"     )
 }
 
 scalacOptions += "-deprecation"
 
 seq(webSettings :_*)
+
+port in container.Configuration := 8080

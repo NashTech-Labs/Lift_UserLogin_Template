@@ -1,7 +1,5 @@
 package code.comet
 
-import scala.actors.Actor
-import Actor._
 import net.liftweb._
 import http._
 import js._
@@ -10,25 +8,32 @@ import JsCmds._
 import common._
 import util._
 import Helpers._
-import net.liftmodules.textile._
 import _root_.scala.xml.{ NodeSeq, Text }
 import _root_.java.util.Date
-import net.liftweb.actor.LiftActor
 import code.model.User
 import code.model.Message
-import net.liftweb.mapper.PreCache
 import net.liftweb.http.js.jquery.JqJsCmds.AppendHtml
 import akka.actor.ActorRef
+import scala.concurrent.Future
+import scala.concurrent.ExecutionContext
+import ExecutionContext.Implicits.global
+import akka.util.Timeout
+import scala.concurrent.Await
+import code.lib.BridgeController
+import org.bson.types.ObjectId
+import net.liftmodules.textile.TextileParser
 
 case class Messages(msgs: List[String])
+case class Ping()
 
-class Chat extends CometActor {
+class Chat extends CometActor with Loggable {
 
-  private val user = User.currentUser match {
-    case Full(usr) => usr
-    case _ => User
+  implicit val timeout = Timeout(5 seconds)
+  private val curr_user_id = User.currentUser match {
+    case Full(usr) => usr.id.is
+    case _ => new ObjectId
   }
-  private var chats: List[Message] = Message.findAll
+  private var chats: List[(ObjectId, String)] = Nil
 
   private val ulId = S.attr("ul_id") openOr "some_ul_id"
 
@@ -41,21 +46,25 @@ class Chat extends CometActor {
 
   private lazy val alertManager: ActorRef = CometAlertController.getManager
 
+  private lazy val bridge: ActorRef = BridgeController.getBridgeActor
+
   override def render = {
     ("#" + ulId + " *") #> displayList
   }
   private def displayList: NodeSeq = chats.reverse.flatMap(line)
 
-  private def line(m: Message) = {
-    ("name=who" #> getName(m.user.obj.open_!.username.is) &
-      "name=body" #> m.contentAsHtml)(li)
+  private def line(tuple: (ObjectId, String)) = {
+    ("name=who" #> getName(User.findByStringId(tuple._1.toString()).open_!.username.is) &
+      "name=body" #> contentAsHtml(tuple._2))(li)
   }
 
+  def contentAsHtml(content: String) = TextileParser.paraFixer(TextileParser.toHtml(content, Empty))
+
   private def getName(name: String) = {
-    if (user.username.is.equals(name)) {
+    if (User.findByStringId(curr_user_id.toString()).open_!.username.is.equals(name)) {
       "me :-"
     } else {
-      name+" :-"
+      name + " :-"
     }
   }
   // appropriate dynamically generated code to the
@@ -65,18 +74,22 @@ class Chat extends CometActor {
       "postit" -> Helpers.evalElemWithId {
         (id, elem) =>
           SHtml.onSubmit((s: String) => {
-            alertManager ! ChatServerMsg(user, s.trim)
+            alertManager ! ChatServerMsg(curr_user_id, s.trim)
             SetValById(id, "")
           })(elem)
       } _)
 
   override def localSetup {
-    alertManager ! Subscribe(this, User.currentUser.open_!)
+    bridge ! this
+    val future = akka.pattern.ask(alertManager, Subscribe(bridge, User.currentUser.open_!.id.is))
+    val result = Await.result(future, timeout.duration).asInstanceOf[List[(ObjectId, String)]]
+    chats = result
     super.localSetup
   }
 
   override def localShutdown {
-    alertManager ! Unsubscribe(this)
+    alertManager ! Unsubscribe(bridge)
+    bridge ! akka.actor.PoisonPill
     super.localShutdown
   }
 

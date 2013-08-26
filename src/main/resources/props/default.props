@@ -1,6 +1,6 @@
 
 # mongo
-host=localhost:8080
+host=localhost:9999
 mongo.default.host=localhost
 mongo.default.port=27017
 mongo.default.name=knol

@@ -29,6 +29,8 @@ project , we have also exposed services for REST api .
 1.  Start mongo: > mongod
 1.  Import into Eclipse by 
     >sbt eclipse
+1.  Clone code from https://github.com/romix/akka-kryo-serialization.
+1.  Run sbt compile publish-local  
 1.  Start application by 
     >sbt ~container:start
 1.  To Run test cases 

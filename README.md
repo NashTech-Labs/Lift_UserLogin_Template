@@ -68,4 +68,14 @@ project , we have also exposed services for REST api .
 1.  Table contains list of Birthday Reminders.
 1.  User can delete and edit reminder by clicking on Delete and Edit button respectively from table.
 
+*************************************************************************************************************
+### How to test in remote environment:
 
+*************************************************************************************************************
+1.  Open a terminal and run sbt ~container:start.
+1.  Open build.sbt and change
+1.  port in container.Configuration := 8081
+1.  Open another terminal and run sbt ~container:start.
+1.  Register yourself and login and Enjoy chat.
+
+You would be able to do chat remotely from different JVMs. Check and let me know your feedback. Your feedback would be highly appreciated.

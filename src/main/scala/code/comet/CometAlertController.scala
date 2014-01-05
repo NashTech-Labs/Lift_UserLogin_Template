@@ -13,7 +13,6 @@ import ExecutionContext.Implicits.global
 import akka.pattern.AskTimeoutException
 import net.liftweb.common.Loggable
 import java.util.concurrent.TimeoutException
-import code.lib.NettyPort
 import code.config.GlobalActorSystem
 
 object CometAlertController extends Loggable {

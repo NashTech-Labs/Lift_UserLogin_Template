@@ -45,7 +45,7 @@ resolvers += "Google Api client" at "http://mavenrepo.google-api-java-client.goo
             "net.liftmodules" % "lift-jquery-module_2.10" % (liftVersion + "-2.2"),
             "net.liftmodules" % "textile_2.5_2.10" % "1.3" % "compile->default",
             "org.specs2" % "specs2_2.10" % "1.14" % "test",
-            "com.romix.akka" % "akka-kryo-serialization" % "0.2-SNAPSHOT",
+            "com.github.romix.akka" % "akka-kryo-serialization_2.10" % "0.3.0",
         	"com.esotericsoftware.kryo" % "kryo" % "2.20"     )
 }
 

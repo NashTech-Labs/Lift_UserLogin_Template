@@ -19,11 +19,11 @@ mongo.default.pass=knol2012
 
 
 #facebook
-facebook.key=527175957325431
-facebook.secret=45e57475783fc1216dfe65e1183d8ec3
+facebook.key=<facebook.key>
+facebook.secret=<facebook.secret>
 facebook.callbackurl=/api/facebook/auth
 
 #google
-google.client.id=904341832200-fguf5jhisoihbjf9npk5rhtjnuclgbob.apps.googleusercontent.com
-google.client.secret=zrQ0Dfq6g6F7mZm8Ukyh_DCI
+google.client.id=<google.client.id>
+google.client.secret=<google.client.secret>
 
